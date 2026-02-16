@@ -1,1 +1,8 @@
 @import "tailwindcss";
+
+
+@layer base {
+    body {
+        @apply flex flex-col h-screen justify-center
+    }
+}

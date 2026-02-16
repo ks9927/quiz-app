@@ -24,6 +24,8 @@ function App() {
         >
           Start Game
         </button>
+
+        {isClicked && <Card/>}
       </div>
     </>
   );

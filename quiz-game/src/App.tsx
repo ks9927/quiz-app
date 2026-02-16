@@ -1,7 +1,6 @@
-import { useState } from 'react'
-import Card from './Card'
-import './App.css'
-
+import { useState } from "react";
+import Card from "./Card";
+import "./App.css";
 
 function App() {
   const [isClicked, setIsClicked] = useState(false);
@@ -11,19 +10,23 @@ function App() {
 
   return (
     <>
-    <div className='flex flex-col gap-10'>
-        <h1 className='font-bold text-2xl'>
-          Comics Quiz</h1>
-        <button 
-        onClick={showCard}
-        className='
-        {`${isClicked ? hidden: block}`}
+      <div className="flex flex-col gap-10">
+        <h1 className={`
+          ${isClicked ? 'hidden' : 'block'}
+          font-bold text-2xl`}>Comics Quiz</h1>
+
+        <button
+          onClick={showCard}
+          className={`
+          ${isClicked ? 'hidden' : 'block'}
         border-2 border-black bg-blue-500
-         text-white p-2 rounded-xl cursor-pointer'>
-          Start Game</button>
-    </div>
+         text-white p-2 rounded-xl cursor-pointer`}
+        >
+          Start Game
+        </button>
+      </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

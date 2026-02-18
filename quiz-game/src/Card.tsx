@@ -1,4 +1,22 @@
+import { useState, useEffect } from "react"
+
 export default function Card() {
+
+    useEffect(() => {
+        const fetchQuiz = async () => {
+            try {
+                const response = await fetch("https://opentdb.com/api.php?amount=3&category=29&difficulty=easy&type=multiple");
+                const data = await response.json();
+                const quizQuestion = data.results[0].question;
+                console.log(quizQuestion);
+            }
+            catch (error) {
+                console.error("Fetch failed: ", error)
+            }
+        }
+        fetchQuiz()
+    }, [])
+
 
     return (
         <>

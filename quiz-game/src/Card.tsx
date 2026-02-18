@@ -7,8 +7,13 @@ export default function Card() {
             try {
                 const response = await fetch("https://opentdb.com/api.php?amount=3&category=29&difficulty=easy&type=multiple");
                 const data = await response.json();
-                const quizQuestion = data.results[0].question;
+
+                if(response.ok) {
+                    const quizInfo = data.results;
+                const quizQuestion = quizInfo.map((item:any) => item.question);
                 console.log(quizQuestion);
+                }
+                
             }
             catch (error) {
                 console.error("Fetch failed: ", error)

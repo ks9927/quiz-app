@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import he from 'he';
 
 export default function Card() {
 
@@ -17,6 +18,7 @@ export default function Card() {
           const quizQuestion = quizInfo.map((item: any) => item.question);
           console.log(quizQuestion);
           setQuestion(quizQuestion);
+          
 
         }
 

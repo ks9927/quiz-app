@@ -10,18 +10,19 @@ export default function Card() {
     const fetchQuiz = async () => {
       try {
         const response = await fetch(
-          "https://opentdb.com/api.php?amount=3&category=29&difficulty=easy&type=multiple",
-        );
-        const data = await response.json();
-        if (response.ok) {
-          const quizInfo = data.results;
-          const quizQuestion = quizInfo.map((item: any) => item.question);
-          console.log(quizQuestion);
-          setQuestion(quizQuestion);
-          
-
+          "https://opentdb.com/api.php?amount=3&category=29&difficulty=easy&type=multiple");
+       
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
         }
 
+        const data = await response.json();
+         const quizInfo = data.results;
+          const quizQuestion = quizInfo.map((item: any) => {
+            return he.decode(item.question);
+          })
+          // console.log(quizQuestion);
+          setQuestion(quizQuestion);
       } 
       catch (error) {
         console.error("Fetch failed: ", error);

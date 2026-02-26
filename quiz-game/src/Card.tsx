@@ -48,6 +48,10 @@ export default function Card() {
         <div className="border-4 p-11">
           <p>These are some questions</p>
         </div>
+
+        <div>
+          <button className="border-4 bg-green-300 text-black p-4 rounded-xl">Next</button>
+        </div>
       </div>
     </>
   );

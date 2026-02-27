@@ -18,7 +18,14 @@ export default function Card() {
 
         const data = await response.json();
          const quizInfo = data.results;
-          const quizQuestion = quizInfo.map((item: any) => {
+
+           const quizArray = quizInfo.map((quiz: any) => ({
+        question : quiz.question,
+        correct_answer : quiz.correct_answer,
+        incorrect_answers : quiz.incorrect_answers
+        
+      }))
+          const quizQuestion = quizArray.map((item: any) => {
             return he.decode(item.question);
           })
           // console.log(quizQuestion);
@@ -50,7 +57,7 @@ export default function Card() {
         </div>
 
         <div>
-          <button className="border-4 bg-green-300 text-black p-4 rounded-xl">Next</button>
+          <button className="border-4 bg-green-300 text-black p-4 rounded-xl cursor-pointer">Next</button>
         </div>
       </div>
     </>

@@ -4,6 +4,7 @@ import he from "he";
 export default function Card() {
   const [question, setQuestion] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [quizContent, setQuizContent] = useState()
 
   useEffect(() => {
     const fetchQuiz = async () => {
@@ -24,6 +25,8 @@ export default function Card() {
           correct_answer: quiz.correct_answer,
           incorrect_answers: quiz.incorrect_answers,
         }));
+
+        setQuizContent(quizArray)
         const quizQuestion = quizArray.map((item: any) => {
           return he.decode(item.question);
         });

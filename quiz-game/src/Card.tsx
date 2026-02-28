@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import he from "he";
 
 export default function Card() {
- 
-  const [quizContent, setQuizContent] = useState([])
+  const [quizContent, setQuizContent] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     const fetchQuiz = async () => {
@@ -24,25 +24,33 @@ export default function Card() {
           correct_answer: quiz.correct_answer,
           incorrect_answers: quiz.incorrect_answers,
         }));
-           setQuizContent(quizArray)
-      } 
-      catch (error) {
+        setQuizContent(quizArray);
+      } catch (error) {
         console.error("Fetch failed: ", error);
       }
     };
     fetchQuiz();
   }, []);
 
-  if(quizContent.length === 0) {
-    return <div>Loading...</div>
+  if (quizContent.length === 0) {
+    return <div>Loading...</div>;
   }
-  
-       const formatQuiz = quizContent.map((quiz: any) => ({
-        ...quiz,
-          question: he.encode(quiz.question),
-          correct_answer: he.encode(quiz.correct_answer),
-        }));
 
+  const formatQuiz = quizContent.map((quiz: any) => {
+    const allAnswers = [...quiz.incorrect_answers, quiz.correct_answer];
+
+    return {
+      answers: allAnswers.map((ans: any) => he.decode(ans)),
+      question: he.decode(quiz.question),
+      correct_answer: he.decode(quiz.correct_answer),
+    };
+  });
+
+  const currentProblem = formatQuiz[currentIndex];
+
+  const nextProblem = () => {
+    setCurrentIndex((prev) => (prev + 1) % formatQuiz.length);
+  };
   return (
     <>
       {/* Actual card */}
@@ -53,17 +61,19 @@ export default function Card() {
       >
         {/* Questions */}
         <div className="bg-pink-300 p-5 rounded-2xl font-semibold">
-          <p>This is a question</p>
+          <p>{currentProblem.question}</p>
         </div>
 
         {/* Answers div */}
         <div className="border-4 p-11">
-          <p>These are some questions</p>
+          
         </div>
 
         <div>
-          <button 
-          className="border-4 bg-green-300 text-black p-4 rounded-xl cursor-pointer">
+          <button
+            onClick={nextProblem}
+            className="border-4 bg-green-300 text-black p-4 rounded-xl cursor-pointer"
+          >
             Next
           </button>
         </div>

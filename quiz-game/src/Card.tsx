@@ -2,9 +2,8 @@ import { useState, useEffect } from "react";
 import he from "he";
 
 export default function Card() {
-  const [question, setQuestion] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [quizContent, setQuizContent] = useState()
+ 
+  const [quizContent, setQuizContent] = useState([])
 
   useEffect(() => {
     const fetchQuiz = async () => {
@@ -25,24 +24,24 @@ export default function Card() {
           correct_answer: quiz.correct_answer,
           incorrect_answers: quiz.incorrect_answers,
         }));
-
-        setQuizContent(quizArray)
-        const quizQuestion = quizArray.map((item: any) => {
-          return he.decode(item.question);
-        });
-      
-        const currentQuestion = quizQuestion[currentIndex];
-
-        const nextItem = () => {
-          setCurrentIndex((prevIndex) => (prevIndex + 1) % quizArray.length)
-        }
-        setQuestion(currentQuestion);
-      } catch (error) {
+           setQuizContent(quizArray)
+      } 
+      catch (error) {
         console.error("Fetch failed: ", error);
       }
     };
     fetchQuiz();
   }, []);
+
+  if(quizContent.length === 0) {
+    return <div>Loading...</div>
+  }
+  
+       const formatQuiz = quizContent.map((quiz: any) => ({
+        ...quiz,
+          question: he.encode(quiz.question),
+          correct_answer: he.encode(quiz.correct_answer),
+        }));
 
   return (
     <>
@@ -54,7 +53,7 @@ export default function Card() {
       >
         {/* Questions */}
         <div className="bg-pink-300 p-5 rounded-2xl font-semibold">
-          <p>{question}</p>
+          <p>This is a question</p>
         </div>
 
         {/* Answers div */}
@@ -63,7 +62,8 @@ export default function Card() {
         </div>
 
         <div>
-          <button className="border-4 bg-green-300 text-black p-4 rounded-xl cursor-pointer">
+          <button 
+          className="border-4 bg-green-300 text-black p-4 rounded-xl cursor-pointer">
             Next
           </button>
         </div>

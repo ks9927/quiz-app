@@ -48,6 +48,8 @@ export default function Card() {
 
   const currentProblem = formatQuiz[currentIndex];
 
+  const currentAnswers = currentProblem.answers;
+  console.log(currentAnswers)
   const nextProblem = () => {
     setCurrentIndex((prev) => (prev + 1) % formatQuiz.length);
   };
@@ -66,7 +68,11 @@ export default function Card() {
 
         {/* Answers div */}
         <div className="border-4 p-11">
-          
+          {currentAnswers && currentAnswers.map((ans, index) => (
+            <div key={index} className="flex flex-col bg-gray-300 p-4 m-4 border-2 border-blue-700 cursor-pointer">
+              {ans}
+              </div>
+          ))}
         </div>
 
         <div>
